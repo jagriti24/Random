@@ -7,27 +7,26 @@ class Solution(object):
         :type K: int
         :rtype: int
         """
-        i = 0
         maxLength = 0
-        arrayLength = len(A)
-    
-        while ((arrayLength-i) > maxLength):
-            j = i
-            counter = 0
-            length = 0
-    
-            while (j < arrayLength) and ((counter>=K and A[j]==1) or counter<K ):
-                if A[j] == 0:
-                    counter = counter +1
-                    
-                length = length +1
-                j = j + 1
+        hashTracker = {}
+        i = 0
+        countOfZero = 0
+        hashTracker[countOfZero] = -1
+        while i < len(A):
+            if(A[i] == 0):
+                countOfZero = countOfZero + 1
+                hashTracker[countOfZero] = i
                 
-                if(arrayLength-j+length < maxLength): break
-             
-            if maxLength < length:
-                maxLength = length
-               
-            i = i + 1
-        return maxLength   
+            startPos = countOfZero - K
+            if startPos >= 0:
+                length = i - hashTracker[startPos]
+            else:
+                length = i+1
+            if(length > maxLength):
+                    maxLength = length    
+            i = i+ 1
+        return maxLength
+                    
+                
         
+ 
